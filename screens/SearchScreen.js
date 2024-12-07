@@ -1,34 +1,25 @@
-// SearchScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, ScrollView, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { recentItems, symptoms, doctorsList, hospitalsList, specialistCategories } from './sampleData';
 
 const { width } = Dimensions.get('window');
 
 const SearchScreen = ({ navigation }) => {
+    const [activeTab, setActiveTab] = useState('Hospitals');
     const [searchQuery, setSearchQuery] = useState('');
     const [currentLabel, setCurrentLabel] = useState('');
     const [currentLabelIndex, setCurrentLabelIndex] = useState(0);
-    const [activeTab, setActiveTab] = useState('Hospitals');
     const searchLabels = ['Doctors', 'Hospitals', 'Specialities'];
     const [isTyping, setIsTyping] = useState(true);
 
-    // Sample data for recent items
-    const recentItems = [
-        { id: '1', name: 'Dr. Sumitha', image: require('../assets/a.png') },
-        { id: '2', name: 'Apex Hospital', image: require('../assets/b.png') },
-        { id: '3', name: 'Dr. Pandit Ji', image: require('../assets/c.png') },
-        { id: '4', name: 'Apollo Hospital', image: require('../assets/d.png')},
-    ];
+    const filteredDoctors = doctorsList.filter((doctor) =>
+        doctor.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    const filteredHospitals = hospitalsList.filter((hospital) =>
+        hospital.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-    // Sample data for "Are you suffering from?"
-    const symptoms = [
-        { id: '1', name: 'Cough', image: require('../assets/e.png') },
-        { id: '2', name: 'Fever', image: require('../assets/f.png') },
-        { id: '3', name: 'Headache', image: require('../assets/g.png') },
-        { id: '4', name: 'Stomach Ache', image: require('../assets/e.png') },
-    ];
-
-    // Animation logic for the search bar placeholder
     useEffect(() => {
         let typingInterval;
         let erasingInterval;
@@ -71,25 +62,34 @@ const SearchScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* Custom header */}
+            {/* Header */}
             <View style={styles.header}>
                 <View style={styles.headerContent}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Text style={styles.backButtonText}>←</Text>
+                        <Image
+                            source={require('../assets/Vector8.png')}
+                            style={styles.backButtonImage}
+                            resizeMode="contain"
+                        />
                     </TouchableOpacity>
                     <View style={styles.searchBar}>
-                        <Text style={styles.searchIcon}>🔍</Text>
+                        <Image
+                            source={require('../assets/Vector.png')}
+                            style={styles.searchIconImage}
+                            resizeMode="contain"
+                        />
                         <TextInput
                             style={styles.searchInput}
                             placeholder={`Search ${currentLabel}`}
                             placeholderTextColor="#999"
                             value={searchQuery}
                             onChangeText={(text) => setSearchQuery(text)}
+                            autoFocus={true}  // Ensure no auto-focus
                         />
                     </View>
                 </View>
             </View>
-            {/* Tab section */}
+            {/* Tab Section */}
             <View style={styles.tabContainer}>
                 <TouchableOpacity
                     style={[styles.tab, activeTab === 'Hospitals' && styles.activeTab]}
@@ -104,45 +104,97 @@ const SearchScreen = ({ navigation }) => {
                     <Text style={[styles.tabText, activeTab === 'Doctors' && styles.activeTabText]}>Doctors</Text>
                 </TouchableOpacity>
             </View>
-            {/* Content section based on active tab */}
-            {activeTab === 'Hospitals' ? (
-                <ScrollView style={styles.scrollView}>
-                    <Text style={styles.sectionTitle}>Recent</Text>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <View style={styles.horizontalScrollContainer}>
-                            {recentItems.map((item) => (
-                                <View key={item.id} style={styles.recentItemContainer}>
-                                    <Image source={item.image} style={styles.circularImage} />
-                                    <Text style={styles.itemText}>{item.name}</Text>
+            {/* Content Section */}
+            <ScrollView style={styles.scrollView}>
+                {activeTab === 'Hospitals' ? (
+                    searchQuery ? (
+                        filteredHospitals.length > 0 ? (
+                            filteredHospitals.map((hospital) => (
+                                <TouchableOpacity
+                                    key={hospital.id}
+                                    style={styles.card}
+                                    onPress={() => navigation.navigate('HospitalProfile', { hospital })}
+                                >
+                                    <Image source={hospital.image} style={styles.cardImage} />
+                                    <View style={styles.cardContent}>
+                                        <Text style={styles.cardTitle}>{hospital.name}</Text>
+                                        <Text>Address: {hospital.address}</Text>
+                                        <Text>Rating: {hospital.rating}⭐</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        ) : (
+                            <Text>No hospitals found.</Text>
+                        )
+                    ) : (
+                        <View>
+                            <Text style={styles.sectionTitle}>Recent</Text>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                                <View style={styles.horizontalScrollContainer}>
+                                    {recentItems.map((item) => (
+                                        <TouchableOpacity
+                                            key={item.id}
+                                            style={styles.recentItemContainer}
+                                            onPress={() => {
+                                                if (item.type === 'doctor') {
+                                                    navigation.navigate('DoctorProfile', { doctor: item });
+                                                } else if (item.type === 'hospital') {
+                                                    navigation.navigate('HospitalProfile', { hospital: item });
+                                                }
+                                            }}
+                                        >
+                                            <Image source={item.image} style={styles.circularImage} />
+                                            <Text style={styles.itemText}>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    ))}
                                 </View>
-                            ))}
+                            </ScrollView>
+                            {/* "Are you suffering from?" Section */}
+                            <Text style={styles.sectionTitle}>Are you suffering from?</Text>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.symptomsContainer}>
+                                {symptoms.map((symptom) => (
+                                    <TouchableOpacity
+                                        key={symptom.id}
+                                        style={styles.symptomItemContainer}
+                                        onPress={() => navigation.navigate('SymptomDetails', { symptom })}
+                                    >
+                                        <Image source={symptom.image} style={styles.circularImage} />
+                                        <Text style={styles.itemText}>{symptom.name}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </ScrollView>
                         </View>
-                    </ScrollView>
-                    <Text style={styles.sectionTitle}>Are you suffering from?</Text>
-                    <View style={styles.symptomsContainer}>
-                        {symptoms.map((symptom) => (
-                            <View key={symptom.id} style={styles.symptomItemContainer}>
-                                <Image source={symptom.image} style={styles.circularImage} />
-                                <Text style={styles.itemText}>{symptom.name}</Text>
-                            </View>
-                        ))}
-                    </View>
-                </ScrollView>
-            ) : (
-                <ScrollView style={styles.scrollView}>
-                    <Text style={styles.sectionTitle}>Doctors Near You</Text>
-                    {/* Add content for doctors tab here */}
-                    {recentItems.map((doctor) => (
-                        <View key={doctor.id} style={styles.card}>
-                            <Text style={styles.cardTitle}>{doctor.name}</Text>
-                        </View>
-                    ))}
-                </ScrollView>
-            )}
+                    )
+                ) : (
+                    searchQuery ? (
+                        filteredDoctors.length > 0 ? (
+                            filteredDoctors.map((doctor) => (
+                                <TouchableOpacity
+                                    key={doctor.id}
+                                    style={styles.card}
+                                    onPress={() => navigation.navigate('DoctorProfile', { doctor })}
+                                >
+                                    <Image source={doctor.image} style={styles.cardImage} />
+                                    <View style={styles.cardContent}>
+                                        <Text style={styles.cardTitle}>{doctor.name}</Text>
+                                        <Text>{doctor.specialization} | {doctor.hospital}</Text>
+                                        <Text>Rating: {doctor.rating}⭐ | Wait Time: {doctor.waitingTime}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        ) : (
+                            <Text>No doctors found.</Text>
+                        )
+                    ) : (
+                        <Text style={styles.sectionTitle}>Doctors Near You</Text>
+                    )
+                )}
+            </ScrollView>
         </View>
     );
 };
 
+// Using the provided CSS and adding styles for the "Are you suffering from?" section
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -150,10 +202,10 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: '#164772',
-        borderBottomLeftRadius: 25,
-        borderBottomRightRadius: 25,
-        paddingTop: 50, // Adjust for status bar space
-        paddingBottom: 15,
+        borderBottomLeftRadius: 55,
+        borderBottomRightRadius: 55,
+        paddingTop: 50,
+        paddingBottom: 55,
         alignItems: 'center',
     },
     headerContent: {
@@ -164,23 +216,24 @@ const styles = StyleSheet.create({
     backButton: {
         marginRight: 10,
     },
-    backButtonText: {
-        fontSize: 30,
-        color: '#fff',
+    backButtonImage: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
     },
     searchBar: {
-        width: width * 0.8, // Decrease the width of the search bar
+        width: width * 0.8,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#fff',
         borderRadius: width * 0.02,
         paddingHorizontal: 10,
-        height: width * 0.14, // Increase the height to match HomeScreen
+        height: width * 0.14,
     },
-    searchIcon: {
+    searchIconImage: {
+        width: 20,
+        height: 20,
         marginRight: 5,
-        fontSize: 20,
-        color: '#999',
     },
     searchInput: {
         flex: 1,
@@ -228,25 +281,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: width * 0.04,
     },
-    symptomsContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-    },
-    symptomItemContainer: {
-        alignItems: 'center',
-        marginBottom: width * 0.04,
-        width: width * 0.22, // Adjusted for layout
-    },
     circularImage: {
         width: width * 0.18,
         height: width * 0.18,
         borderRadius: width * 0.09,
         marginBottom: width * 0.02,
+        
     },
     itemText: {
         fontSize: width * 0.035,
         textAlign: 'center',
+    },
+    symptomsContainer: {
+        flexDirection: 'row',
+        marginTop: width * 0.02,
+        
+    },
+    symptomItemContainer: {
+        alignItems: 'center',
+        marginRight: width * 0.04,
     },
     card: {
         backgroundColor: '#fff',
@@ -258,11 +311,42 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 3,
+        flexDirection: 'row',
+    },
+    cardImage: {
+        width: width * 0.2,
+        height: width * 0.2,
+        borderRadius: width * 0.1,
+        marginRight: 15,
+    },
+    cardContent: {
+        flex: 1,
+        justifyContent: 'center',
     },
     cardTitle: {
         fontSize: width * 0.045,
         fontWeight: 'bold',
         marginBottom: 5,
+    },
+    // Additional CSS for enhanced presentation:
+    symptomItemContainer: {
+        alignItems: 'center',
+        marginHorizontal: width * (-0.019),
+        padding: width * 0.02,
+        marginRight: width * 0.023,
+    },
+    circularImage: {
+        width: width * 0.2,
+        height: width * 0.2,
+        borderRadius: width * 0.1,
+        borderWidth: 1,
+        borderColor: '#ddd',
+    },
+    itemText: {
+        fontSize: width * 0.035,
+        textAlign: 'center',
+        marginTop: width * 0.02,
+        color: '#333',
     },
 });
 

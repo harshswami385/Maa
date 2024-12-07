@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Modal } from 'react-native';
+import { View, Text, Image, TextInput, ScrollView, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Modal,Keyboard,TouchableWithoutFeedback } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const { width } = Dimensions.get('window');
@@ -54,6 +54,10 @@ const HomeScreen = () => {
             clearInterval(erasingInterval);
         };
     }, [isTyping, currentLabelIndex]);
+    const handleSearchNavigation = () => {
+        Keyboard.dismiss(); // Dismiss the keyboard before navigating
+        navigation.navigate('SearchScreen');
+    };
 
     const specialities = [
         { id: '1', name: 'Cardiology', image: require('../assets/Cardiology.png.png') },
@@ -155,15 +159,16 @@ const HomeScreen = () => {
                  <Text style={styles.username}>Hi Samrat, how are you?</Text>
                 </View>
                 <View style={styles.searchBar}>
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder={`Search ${currentLabel}`}
-                        placeholderTextColor="#999999"
-                        value={searchQuery}
-                        onFocus={() => navigation.navigate('SearchScreen')}
-                        onChangeText={(text) => setSearchQuery(text)}
-                    />
-                </View>
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder={`Search ${currentLabel}`}
+                            placeholderTextColor="#999999"
+                            value={searchQuery}
+                            onChangeText={(text) => setSearchQuery(text)}
+                            // No onFocus handler here
+                            onTouchStart={handleSearchNavigation}
+                        />
+                    </View>
             </View>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.specialitiesHeader}>
@@ -177,9 +182,9 @@ const HomeScreen = () => {
                     {filteredSpecialities.length > 0 ? (
                         filteredSpecialities.map((item) => (
                             <View key={item.id} style={styles.specialityContainer}>
-                                <TouchableOpacity>
+                                <TouchableWithoutFeedback>
                                     <Image source={item.image} style={styles.specialityImage} />
-                                </TouchableOpacity>
+                                </TouchableWithoutFeedback>
                                 <Text style={styles.specialityText}>{item.name}</Text>
                             </View>
                         ))
@@ -218,7 +223,7 @@ const HomeScreen = () => {
 
                 {(showHospitals ? filteredHospitals : filteredDoctors).length > 0 ? (
                     (showHospitals ? filteredHospitals : filteredDoctors).map((item) => (
-                        <TouchableOpacity key={item.id} style={styles.hospitalContainer}>
+                        <TouchableOpacity activeOpacity={1} key={item.id} style={styles.hospitalContainer}>
                             <View style={styles.imageWrapper}>
                                 <Image source={item.image} style={styles.hospitalImage} />
                                 <View style={styles.ratingOverlay}>
