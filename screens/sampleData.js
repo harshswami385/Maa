@@ -1,4 +1,3 @@
-
 export const recentItems = [
     { id: '1', name: 'Dr. Sumitha', image: require('../assets/a.png') },
     { id: '2', name: 'Apex Hospital', image: require('../assets/b.png') },
@@ -14,10 +13,10 @@ export const symptoms = [
 ];
 
 const specialistCategories = [
-    { id: '1', name: 'Cardiology', image: require('../assets/Cardiology.png.png') },
-    { id: '2', name: 'Pediatrics', image: require('../assets/Pediatrics.png.png') },
-    { id: '3', name: 'General Physician', image: require('../assets/GeneralPhysician.png.png') },
-    { id: '4', name: 'Gastrology', image: require('../assets/Gastrology.png.png') },
+    { id: '1', name: 'Cardiology', image: require('../assets/Cardiology.png') },
+    { id: '2', name: 'Pediatrics', image: require('../assets/Pediatrics.png') },
+    { id: '3', name: 'General Physician', image: require('../assets/GeneralPhysician.png') },
+    { id: '4', name: 'Gastrology', image: require('../assets/Gastrology.png') },
 ];
 
 // Sample data for doctors
@@ -27,7 +26,7 @@ export const doctorsList = [
         name: 'Dr. Amitsha Agarwal',
         specialty: 'Cardiologist',
         hospitalName: 'BC Roy Hospital',
-        clinicName: 'BC Roy Hospital, IIT Kharagpur',
+        clinicName: 'BC Roy Hospital',
         clinicImage: require('../assets/clinic.jpg'),
         address: 'BC Roy hospital, Indian Institute of Technology Kharagpur, Kharagpur, West Medinapore, West Bengal, 721302',
         pinCode: '721302',
@@ -41,6 +40,7 @@ export const doctorsList = [
         Schedule: 'Everyday 10:00 AM to 2:00 PM',
         waitingTime: '35 Minutes',
         fees: '₹1500',
+        
         contactNumber: '+91-1234567890',
         about: 'Dr. Amitsha Agarwal is a highly experienced cardiologist with over 10 years of experience. She specializes in treating complex heart conditions and is known for her patient-centric approach.',
         reviews: [
@@ -143,7 +143,7 @@ export const doctorsList = [
         name: 'Dr. Sumit Verma',
         specialty: 'General Physician',
         hospitalName: 'MediCare Clinic',
-        clinicName: 'MediCare Hospital',
+        clinicName: 'MediCare Clinic',
         clinicImage: require('../assets/clinicdent.jpg'),
         address: '67 Third Blvd, Downtown',
         pinCode: '110001',
@@ -258,8 +258,834 @@ export const doctorsList = [
         id: '3',
         name: 'Dr. Rahul Sharma',
         specialty: 'Pediatrician',
-        hospitalName: 'Apollo Clinic',
+        hospitalName: 'Apollo Hospital',
         clinicName: 'Apollo Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
+        clinicImage: require('../assets/clinicdent.jpg'),
+        address: '45 Second Ave, Uptown',
+        pinCode: '400051',
+        district: 'Uptown District',
+        state: 'Maharashtra',
+        image: require('../assets/Maledoc.jpg'),
+        experience: '5 years',
+        rating: 4.7,
+        currentQueue: 55,
+        yourQueue: 55,
+        Schedule: 'Weekdays 11:00 AM to 3:00 PM',
+        waitingTime: '20 Minutes',
+        fees: '₹1200',
+        contactNumber: '+91-1122334455',
+        about: 'Dr. Rahul Sharma is a dedicated pediatrician with 5 years of experience. He is passionate about child healthcare and known for his compassionate approach towards young patients.',
+        reviews: [
+            {
+                id: '3',
+                reviewer: 'Jane Smith',
+                date: '1 week ago',
+                rating: 4.3,
+                reviewText: 'Using CareQ was a game changer. Dr. Rahul Sharma was attentive and kind. This app makes healthcare so much easier to access. Highly recommended!',
+            },
+            {
+                id: '4',
+                reviewer: 'John Doe',
+                date: '1 month ago',
+                image: require('../assets/Maledoc.jpg'),
+                rating: 5,
+                reviewText: 'Dr. Rahul provided exceptional care, and I found him effortlessly through CareQ. Great experience, I can’t imagine going back to the old ways of booking!',
+            },
+        ],
+        schedule: [
+            {
+                day: 'Monday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Tuesday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['11:00 AM - 1:00 PM', '2:00 PM - 4:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Wednesday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Thursday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Hospital',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Apollo Hospital, 1014 Street, Uptown',
+                        timings: ['11:00 AM - 1:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Friday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+            {
+                day: 'Saturday',
+                clinics: [
+                    {
+                        clinicName: 'Apollo Clinic',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: '45 Second Ave, Uptown, Maharashtra',
+                        timings: ['12:00 PM - 3:00 PM'],
+                    },
+                ],
+            },
+            {
+                day: 'Sunday',
+                clinics: [
+                    {
+                        clinicName: 'Not Available',
+                        clinicImage: require('../assets/clinicdent.jpg'),
+                        location: 'Doctor is not available on this day.',
+                        timings: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        id: '3',
+        name: 'Dr. Rahul Sharma',
+        specialty: 'Pediatrician',
+        hospitalName: 'Apex Hospital',
+        clinicName: 'Apex Hospital',
         clinicImage: require('../assets/clinicdent.jpg'),
         address: '45 Second Ave, Uptown',
         pinCode: '400051',
@@ -495,8 +1321,7 @@ export const hospitalsList = [
         name: 'Apex Hospital',
         address: '123 Main St, City Center',
         image: require('../assets/Ada.jpg'),
-        rating: 4.2,
-    },
+        rating: 4.2,    },
     {
         id: '2',
         name: 'Apollo Hospital',
@@ -506,10 +1331,17 @@ export const hospitalsList = [
     },
     {
         id: '3',
-        name: 'MediCare Hospital',
+        name: 'MediCare Clinic',
         address: '67 Third Blvd, Downtown',
         image: require('../assets/Ada.jpg'),
         rating: 4.4,
+    },
+    {
+        id: '4',
+        name: 'Global Health Clinic',
+        address: '89 Fourth Rd, Suburbia',
+        image: require('../assets/Ada.jpg'),
+        rating: 4.3,
     },
     {
         id: '4',
