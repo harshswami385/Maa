@@ -17,6 +17,7 @@ import {useNavigation,useRoute } from '@react-navigation/native';
 
 const { width } = Dimensions.get("window");
 
+
 const AppointmentForm = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [dob, setDob] = useState("");

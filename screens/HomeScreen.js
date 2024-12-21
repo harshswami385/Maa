@@ -10,26 +10,54 @@ import {
     Dimensions,
     StatusBar,
     Modal,
+    FlatList
 } from 'react-native';
-import { useNavigation,useIsFocused } from '@react-navigation/native';
-import { hospitalsList, doctorsList } from './sampleData';// Import sample data
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+import { hospitalsList, doctorsList } from './sampleData'; // Import sample data
 const { width } = Dimensions.get('window');
 
 const HomeScreen = () => {
     const [selectedTab, setSelectedTab] = useState('Home');
-    const [hospitalOrDoctor, setHospitalOrDoctor] = useState('Hospitals'); // Toggle between Hospitals and Doctors
+    const [hospitalOrDoctor, setHospitalOrDoctor] = useState('Hospitals');
     const [sortBy, setSortBy] = useState(null); // Sorting criteria
     const [originalData, setOriginalData] = useState(hospitalsList); // Store original data for reset
     const [data, setData] = useState(hospitalsList); // Current displayed data
     const [showSortModal, setShowSortModal] = useState(false); // Show sort modal
+    const [showSpecialitiesModal, setShowSpecialitiesModal] = useState(false); // Show all specialities modal
     const navigation = useNavigation();
     const isFocused = useIsFocused();
 
-    // State for animated placeholder text
-    const searchLabels = ['Doctors', 'Hospitals', 'Specialities'];
+    // Search bar state and animation
     const [currentPlaceholder, setCurrentPlaceholder] = useState('');
     const [currentLabelIndex, setCurrentLabelIndex] = useState(0);
+    const searchLabels = ['Doctors', 'Hospitals', 'Specialities'];
     const [isTyping, setIsTyping] = useState(true);
+
+    const specialities = [
+        { id: '1', name: 'Cardiologist', image: require('../assets/Cardiology.png') },
+        { id: '2', name: 'Pediatrician', image: require('../assets/Pediatrics.png') },
+        { id: '3', name: 'General Physician', image: require('../assets/GeneralPhysician.png') },
+        { id: '4', name: 'Gastrologist', image: require('../assets/Gastrology.png') },
+        { id: '5', name: 'Dentist', image: require('../assets/Gastrology.png') },
+    ];
+
+    useEffect(() => {
+        if (isFocused) {
+            // Reset the tab to 'Home' when the screen is focused (navigated back to)
+            setSelectedTab('Home');
+        }
+    }, [isFocused]);
+
+    useEffect(() => {
+        // Update data when toggling between Hospitals and Doctors
+        if (hospitalOrDoctor === 'Hospitals') {
+            setOriginalData([...hospitalsList]);
+            setData([...hospitalsList]);
+        } else {
+            setOriginalData([...doctorsList]);
+            setData([...doctorsList]);
+        }
+    }, [hospitalOrDoctor]);
 
     useEffect(() => {
         let typingInterval, erasingInterval;
@@ -69,52 +97,18 @@ const HomeScreen = () => {
             clearInterval(erasingInterval);
         };
     }, [isTyping, currentLabelIndex]);
-    useEffect(() => {
-        if (isFocused) {
-            // Reset the tab to 'Home' when the screen is focused (navigated back to)
-            setSelectedTab('Home');
-        }
-    }, [isFocused]);
 
-    useEffect(() => {
-        // Update data when toggling between Hospitals and Doctors
-        if (hospitalOrDoctor === 'Hospitals') {
-            setOriginalData([...hospitalsList]);
-            setData([...hospitalsList]);
-        } else {
-            setOriginalData([...doctorsList]);
-            setData([...doctorsList]);
-        }
-    }, [hospitalOrDoctor]);
-
-    const handleSort = (criterion) => {
-        if (criterion === 'Distance') {
-            setData((prevData) =>
-                [...prevData].sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance))
-            );
-        } else if (criterion === 'Rating') {
-            setData((prevData) =>
-                [...prevData].sort((a, b) => parseFloat(b.rating) - parseFloat(a.rating))
-            );
-        } else if (criterion === 'Reset') {
-            setData([...originalData]);
-        }
-        setSortBy(criterion);
-        setShowSortModal(false); // Close the modal after selection
+    const handleSpecialityClick = (specialityName) => {
+        const filteredDoctors = doctorsList.filter(
+            (doctor) => doctor.specialty === specialityName
+        );
+        navigation.navigate('SearchScreen', { doctors: filteredDoctors }); // Pass filtered doctors
     };
 
-    const handleSearchNavigation = () => {
-        navigation.navigate('SearchScreen');
+    const handleViewAllSpecialities = () => {
+        setShowSpecialitiesModal(true);
     };
 
-    const specialities = [
-        { id: '1', name: 'Cardiology', image: require('../assets/Cardiology.png') },
-        { id: '2', name: 'Pediatrics', image: require('../assets/Pediatrics.png') },
-        { id: '3', name: 'General Physician', image: require('../assets/GeneralPhysician.png') },
-        { id: '4', name: 'Gastrology', image: require('../assets/Gastrology.png') },
-    ];
-
-    // Navigate to the respective profile screen based on the selected item (doctor or hospital)
     const handleItemClick = (item) => {
         if (hospitalOrDoctor === 'Hospitals') {
             navigation.navigate('HospitalProfile', { hospital: item });
@@ -139,19 +133,17 @@ const HomeScreen = () => {
             <StatusBar backgroundColor="#164772" barStyle="light-content" />
             <View style={styles.header}>
                 <View style={styles.headerContent}>
-                    {/* Location Selector */}
                     <TouchableOpacity style={styles.locationSelector}>
                         <Text style={styles.locationText}>Kharagpur, West Bengal</Text>
                         <Image
-                            source={require('../assets/d.png')} // Replace with dropdown icon
+                            source={require('../assets/down-icon.png')}
                             style={styles.dropdownIcon}
                         />
                     </TouchableOpacity>
 
-                    {/* Notification Icon */}
                     <TouchableOpacity style={styles.notificationIcon}>
                         <Image
-                            source={require('../assets/d.png')} // Replace with notification icon
+                            source={require('../assets/notification-3-fill.png')}
                             style={styles.notificationImage}
                         />
                         <View style={styles.badge}>
@@ -160,11 +152,10 @@ const HomeScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Search Bar */}
                 <View style={styles.searchBarContainer}>
-                    <TouchableOpacity onPress={handleSearchNavigation} style={styles.searchBarTouchable}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.searchBarTouchable}>
                         <Image
-                            source={require('../assets/Vector.png')} // Replace with your search icon
+                            source={require('../assets/Vector.png')}
                             style={styles.searchIcon}
                         />
                         <TextInput
@@ -177,36 +168,37 @@ const HomeScreen = () => {
                 </View>
             </View>
 
-            {/* Content */}
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-                {/* Specialities Section */}
                 <View style={styles.specialitiesHeader}>
                     <Text style={styles.sectionTitle}>Specialities</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleViewAllSpecialities}>
                         <Text style={styles.viewAllButton}>View All (24)</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View style={styles.specialitiesContainer}>
                     {specialities.map((item) => (
-                        <View key={item.id} style={styles.specialityContainer}>
+                        <TouchableOpacity
+                            key={item.id}
+                            style={styles.specialityContainer}
+                            onPress={() => handleSpecialityClick(item.name)}
+                        >
                             <Image source={item.image} style={styles.specialityImage} />
                             <Text style={styles.specialityText}>{item.name}</Text>
-                        </View>
+                        </TouchableOpacity>
                     ))}
                 </View>
 
-                {/* Hospitals/Doctors Section */}
                 <View style={styles.hospitalsHeader}>
                     <Text style={styles.sectionTitle}>
                         {hospitalOrDoctor === 'Hospitals' ? 'Hospitals Near You' : 'Doctors Near You'}
                     </Text>
                 </View>
 
-                {/* Sort and Toggle Buttons */}
                 <View style={styles.buttonRow}>
                     <TouchableOpacity
                         style={styles.sortButton}
-                        onPress={() => setShowSortModal(true)} // Open modal
+                        onPress={() => setShowSortModal(true)}
                     >
                         <Text style={styles.sortButtonText}>
                             Sort By {sortBy ? `: ${sortBy}` : ''}
@@ -248,7 +240,6 @@ const HomeScreen = () => {
                     </View>
                 </View>
 
-                {/* Data Cards */}
                 {data.map((item) => (
                     <TouchableOpacity key={item.id} style={styles.hospitalCard} onPress={() => handleItemClick(item)}>
                         <Image source={item.image} style={styles.hospitalImage} />
@@ -264,7 +255,39 @@ const HomeScreen = () => {
                 ))}
             </ScrollView>
 
-            {/* Sort Modal */}
+            <Modal
+                visible={showSpecialitiesModal}
+                transparent
+                animationType="fade"
+                onRequestClose={() => setShowSpecialitiesModal(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.modalContainer}>
+                        <FlatList
+                            data={specialities}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity
+                                    style={styles.modalOptionContainer}
+                                    onPress={() => {
+                                        setShowSpecialitiesModal(false);
+                                        handleSpecialityClick(item.name);
+                                    }}
+                                >
+                                    <Text style={styles.modalOption}>{item.name}</Text>
+                                </TouchableOpacity>
+                            )}
+                        />
+                        <TouchableOpacity
+                            style={styles.modalCancelContainer}
+                            onPress={() => setShowSpecialitiesModal(false)}
+                        >
+                            <Text style={styles.modalCancel}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
             <Modal
                 visible={showSortModal}
                 transparent
@@ -289,40 +312,47 @@ const HomeScreen = () => {
                 </View>
             </Modal>
 
-            {/* Bottom Navigation */}
             <View style={styles.bottomToggleContainer}>
-                <TouchableOpacity
-                    style={[styles.toggleButton, selectedTab === 'Home' && styles.toggleButtonActive]}
-                    onPress={() => handleBottomNavigation('Home')}
-                >
-                    <Image source={require('../assets/d.png')} style={styles.toggleIcon} />
-                    <Text style={selectedTab === 'Home' ? styles.toggleTextActive : styles.toggleText}>
-                        Home
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.toggleButton, selectedTab === 'Appointments' && styles.toggleButtonActive]}
-                    onPress={() => handleBottomNavigation('Appointments')}
-                >
-                    <Image source={require('../assets/d.png')} style={styles.toggleIcon} />
-                    <Text style={selectedTab === 'Appointments' ? styles.toggleTextActive : styles.toggleText}>
-                        Appointments
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.toggleButton, selectedTab === 'Profile' && styles.toggleButtonActive]}
-                    onPress={() => handleBottomNavigation('Profile')}
-                >
-                    <Image source={require('../assets/d.png')} style={styles.toggleIcon} />
-                    <Text style={selectedTab === 'Profile' ? styles.toggleTextActive : styles.toggleText}>
-                        Profile
-                    </Text>
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+        style={[styles.toggleButton, selectedTab === 'Home' && styles.toggleButtonActive]}
+        onPress={() => handleBottomNavigation('Home')}
+    >
+        <View style={[styles.iconContainer, selectedTab === 'Home' && styles.iconContainerActive]}>
+            <Image source={require('../assets/home-6-line.png')} style={styles.toggleIcon} />
+        </View>
+        <Text style={selectedTab === 'Home' ? styles.toggleTextActive : styles.toggleText}>
+            Home
+        </Text>
+    </TouchableOpacity>
+
+
+    <TouchableOpacity
+        style={[styles.toggleButton, selectedTab === 'Appointments' && styles.toggleButtonActive]}
+        onPress={() => handleBottomNavigation('Appointments')}
+    >
+        <View style={[styles.iconContainer, selectedTab === 'Appointments' && styles.iconContainerActive]}>
+            <Image source={require('../assets/Profile.png')} style={styles.toggleIcon} />
+        </View>
+        <Text style={selectedTab === 'Appointments' ? styles.toggleTextActive : styles.toggleText}>
+           My Appointments
+        </Text>
+    </TouchableOpacity>
+    <TouchableOpacity
+        style={[styles.toggleButton, selectedTab === 'Profile' && styles.toggleButtonActive]}
+        onPress={() => handleBottomNavigation('Profile')}
+    >
+        <View style={[styles.iconContainer, selectedTab === 'Profile' && styles.iconContainerActive]}>
+            <Image source={require('../assets/Home.png')} style={styles.toggleIcon} />
+        </View>
+        <Text style={selectedTab === 'Profile' ? styles.toggleTextActive : styles.toggleText}>
+            Profile
+        </Text>
+    </TouchableOpacity>
+</View>
+
         </>
     );
 };
-
 
 const styles = StyleSheet.create({
     modalOverlay: {
@@ -494,14 +524,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#F5F5F5',
         borderRadius: 10,
-    },
-    toggleButton: {
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 10,
     },
+    
     toggleButtonActive: {
-        backgroundColor: '#164772',
+        // backgroundColor: '#164772',
     },
     toggleButtonText: {
         fontSize: 14,
@@ -561,19 +589,46 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderColor: '#E0E0E0',
     },
+    toggleButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    toggleButtonActive: {
+        // backgroundColor: '#E6F7F2', // Light green background
+        borderRadius: 25, // Rounded corners for active button
+        padding: 10,
+    },
+    iconContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 40,
+        height: 40,
+        borderRadius: 20, // Circular shape
+        backgroundColor: 'transparent', // Default transparent background
+    },
+    iconContainerActive: {
+        backgroundColor: '#1BBA8D',
+        width: 38,
+        height: 38,
+        borderRadius:16.2, // Green background for active icon
+    },
     toggleIcon: {
-        width: 24,
-        height: 24,
-        marginBottom: 5,
+        width: 30,
+        height: 30,
+
     },
     toggleText: {
         fontSize: 12,
         color: '#666666',
+        marginTop: 5,
     },
     toggleTextActive: {
         fontSize: 12,
-        color: '#1BBA8D',
+        // color: '#1BBA8D',
+        fontWeight: 'bold',
+        text:'black', // Bold text for active state
     },
+    
 });
 
 export default HomeScreen;
