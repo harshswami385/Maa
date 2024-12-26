@@ -17,7 +17,9 @@ import AppointmentForm from './screens/AppointmentForm';
 import AppointmentConfirmation from './screens/AppointmentConfirmation';
 import AppointmentDetails from './screens/AppointmentDetails';
 import AppointmentsScreen from './screens/AppointmentsScreen';
-import UserScreen from './screens/UserScreen';
+import UserProfile from './screens/UserProfile';
+import BottomNavigation from './screens/BottomNavigation';
+
 
 // Enable native screens for better performance
 enableScreens();
@@ -57,7 +59,7 @@ export default function App() {
                 <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
                 <Stack.Screen name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen name="AppointmentsScreen" component={AppointmentsScreen} />
-                <Stack.Screen name="UserScreen" component={UserScreen} />
+                <Stack.Screen name="UserProfile" component={UserProfile} />
                 <Stack.Screen name="SearchScreen" component={SearchScreen} />
                 <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
                 <Stack.Screen name="HospitalProfile" component={HospitalProfile} />
@@ -65,6 +67,7 @@ export default function App() {
                 <Stack.Screen name="AppointmentForm" component={AppointmentForm} />
                 <Stack.Screen name="AppointmentConfirmation" component={AppointmentConfirmation} />
                 <Stack.Screen name="AppointmentDetails" component={AppointmentDetails} />
+                <Stack.Screen name="BottomNavigation" component={BottomNavigation} />
             </Stack.Navigator>
         </NavigationContainer>
     );
